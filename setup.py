@@ -23,6 +23,7 @@ setup(
     ],
 
     install_requires=[
+        'telegram-bot-framework',
     ],
 
     python_requires='>=3',
