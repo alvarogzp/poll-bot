@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-from poll.bot.manager import BotManager
+from poll.presentation.telegram.bot.manager import BotManager
 
 if __name__ == "__main__":
     bot_manager = BotManager()
