@@ -20,3 +20,8 @@ class PollOptionNumber(Comparable):
     def __init__(self, number: int):
         super().__init__(number, PollOptionNumber)
         self.number = number
+
+
+class PollOptionInfo:
+    def __init__(self, name: str):
+        self.name = name
