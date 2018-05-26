@@ -17,7 +17,7 @@ from poll.domain.model.poll.info import PollInfo
 from poll.domain.model.poll.option import PollOptionInfo, PollOptionNumber
 from poll.domain.model.poll.poll import Poll, PollNumber
 from poll.domain.model.poll.publication import PollPublication
-from poll.domain.model.poll.vote import OptionPollVote
+from poll.domain.model.poll.vote import PollVote, OptionPollVote, OpenPollVote
 from poll.domain.model.user.state import State
 from poll.domain.model.user.user import User
 
@@ -102,10 +102,17 @@ class SqlitePollDataSource(SqliteStorageDataSource, PollDataSource):
         vote = self.mappers.option_vote.map_option_vote(vote, poll_user_id)
         self.poll_vote_option.vote_option(vote)
 
+    def vote_open(self, vote: OpenPollVote):
+        raise NotImplementedError("unavailable yet")
+
     def unvote_option(self, vote: OptionPollVote):
         poll = self.poll_publication.get_poll(vote.publication)
         option = self.poll_option.get_id(poll, vote.option)
         self.poll_vote_option.unvote_option(vote.user, poll, option)
+
+    def unvote_poll(self, vote: PollVote):
+        poll = self.poll_publication.get_poll(vote.publication)
+        self.poll_vote_option.unvote_poll(vote.user, poll)
 
     def get_votes(self, poll: Poll, user: User) -> PollVotes:
         votes = self.poll_vote_option.get_user_votes(poll, user)
