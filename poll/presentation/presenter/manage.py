@@ -16,8 +16,7 @@ class ManagePollPresenter:
     def __init__(self, view: ManagePollView, manage: BotManagePollInteractor, get: GetPollInteractor,
                  mapper_user: UserMapper, mapper_poll_number: PollNumberMapper,
                  mapper_poll_option_number: PollOptionNumberMapper, mapper_poll_settings: PollSettingsMapper,
-                 mapper_poll_info: PollInfoMapper,
-                 mapper_full_poll: FullPollMapper):
+                 mapper_poll_info: PollInfoMapper, mapper_full_poll: FullPollMapper):
         self.view = view
         self.manage = manage
         self.get = get
