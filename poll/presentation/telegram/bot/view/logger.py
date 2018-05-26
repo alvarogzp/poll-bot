@@ -1,18 +1,15 @@
 from bot.action.util.textformat import FormattedText
-from bot.api.api import Api
 from bot.logger.logger import Logger
 
 from poll.domain.logger import PollLogger
 from poll.presentation.telegram.bot.formatter.log import LogFormatter
-from poll.presentation.telegram.bot.view.base import BaseView
 
 
 LOG_TAG_MIGRATION = FormattedText().bold("MIGRATION")
 
 
-class TelegramPollLogger(BaseView, PollLogger):
-    def __init__(self, api: Api, logger: Logger, log_formatter: LogFormatter):
-        super().__init__(api)
+class TelegramPollLogger(PollLogger):
+    def __init__(self, logger: Logger, log_formatter: LogFormatter):
         self.logger = logger
         self.log_formatter = log_formatter
 
