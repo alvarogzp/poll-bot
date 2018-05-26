@@ -1,6 +1,8 @@
 from bot.action.core.action import ActionGroup
 from bot.action.core.command import CommandAction
-from bot.action.core.filter import MessageAction, TextMessageAction, NoPendingAction, PendingAction
+from bot.action.core.command.no_command import NoCommandAction
+from bot.action.core.filter import MessageAction, TextMessageAction, NoPendingAction, PendingAction, InlineQueryAction, \
+    ChosenInlineResultAction, CallbackQueryAction
 from bot.action.standard.about import AboutAction, VersionAction
 from bot.action.standard.admin import RestartAction, EvalAction, AdminActionWithErrorMessage, HaltAction
 from bot.action.standard.admin.config_status import ConfigStatusAction
@@ -18,6 +20,13 @@ from bot.action.standard.perchat import PerChatAction
 from bot.bot import Bot
 
 from poll import project_info
+from poll.presentation.telegram.bot.action.inline.callback import PublishedPollAction
+from poll.presentation.telegram.bot.action.inline.chosen import ChosenPollAction
+from poll.presentation.telegram.bot.action.injector import InjectorAction
+from poll.presentation.telegram.bot.action.inline.query import SearchPollAction
+from poll.presentation.telegram.bot.action.manage.commands import StartCommandAction, DoneCommandAction, \
+    CancelCommandAction
+from poll.presentation.telegram.bot.action.manage.message import PollMessageAction
 
 
 class BotManager:
@@ -30,11 +39,38 @@ class BotManager:
                 LoggerAction(reuse_max_length=2000, reuse_max_time=1, reuse_max_number=10).then(
                     AsyncApiAction().then(
 
+                        InjectorAction(),
+
+                        InlineQueryAction().then(
+                            SearchPollAction()
+                        ),
+
+                        ChosenInlineResultAction().then(
+                            ChosenPollAction()
+                        ),
+
+                        CallbackQueryAction().then(
+                            PublishedPollAction()
+                        ),
+
                         MessageAction().then(
                             PerChatAction().then(
 
                                 InternationalizationAction().then(
                                     TextMessageAction().then(
+
+                                        NoCommandAction().then(
+                                            PollMessageAction()
+                                        ),
+                                        CommandAction("start").then(
+                                            StartCommandAction()
+                                        ),
+                                        CommandAction("done").then(
+                                            DoneCommandAction()
+                                        ),
+                                        CommandAction("cancel").then(
+                                            CancelCommandAction()
+                                        ),
 
                                         CommandAction("about").then(
                                             AboutAction(
