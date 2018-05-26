@@ -1,7 +1,7 @@
 from poll.domain.check.unique_vote import UniqueVotePollCheck
 from poll.domain.model.poll.group.votes import OptionPollVotes
 from poll.domain.model.poll.poll import Poll
-from poll.domain.model.poll.vote import PollVote, OptionPollVote
+from poll.domain.model.poll.vote import PollVote, OptionPollVote, OpenPollVote
 from poll.domain.model.vote_result import VoteResult, VOTED, UNVOTED, CHANGED_VOTE
 from poll.domain.repository.poll.get import GetPollRepository
 from poll.domain.repository.poll.vote import VotePollRepository
@@ -17,6 +17,8 @@ class VotePollInteractor:
         poll = self.get.get_from_publication(vote.publication)
         if isinstance(vote, OptionPollVote):
             return self._vote_option(poll, vote)
+        elif isinstance(vote, OpenPollVote):
+            return self._vote_open(poll, vote)
         else:
             raise Exception("unexpected vote type")
 
@@ -36,3 +38,14 @@ class VotePollInteractor:
                 result = CHANGED_VOTE
             self.check.no_more_than_one_vote(previous_votes)
             return result
+
+    def _vote_open(self, poll: Poll, vote: OpenPollVote) -> VoteResult:
+        previous_votes = self.repository_vote.get_votes(poll, vote.user)
+        result = VOTED
+        if not previous_votes.is_empty():
+            previous_vote = previous_votes.first()
+            self.repository_vote.unvote_poll(previous_vote)
+            result = CHANGED_VOTE
+        self.repository_vote.vote_open(vote)
+        self.check.no_more_than_one_vote(previous_votes)
+        return result
