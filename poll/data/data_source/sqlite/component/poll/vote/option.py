@@ -94,6 +94,27 @@ REMOVE_VOTE = Delete()\
     )\
     .build()
 
+REMOVE_VOTES = Delete()\
+    .table(POLL_VOTE_OPTION)\
+    .where(
+        MultipleCondition(
+            AND,
+            Condition(USER, IN,
+                      Select()
+                      .fields(POLL_USER_ID)
+                      .table(POLL_USER)
+                      .where(Condition(POLL_USER_USER_ID, EQUAL, ":user_id"))
+                      ),
+            Condition(PUBLICATION, IN,
+                      Select()
+                      .fields(PUBLICATION_ID)
+                      .table(POLL_PUBLICATION)
+                      .where(Condition(POLL_ID, EQUAL, ":poll_id"))
+                      )
+        )
+    )\
+    .build()
+
 GET_USER_VOTES = Select()\
     .fields(USER, PUBLICATION, OPTION)\
     .table(POLL_VOTE_OPTION)\
@@ -141,6 +162,9 @@ class PollVoteOptionSqliteComponent(BasePollSqliteStorageComponent):
 
     def unvote_option(self, user: User, poll: Poll, option: PollOption):
         self.statement(REMOVE_VOTE).execute(user_id=user.id, poll_id=poll.id, option=option.id)
+
+    def unvote_poll(self, user: User, poll: Poll):
+        self.statement(REMOVE_VOTES).execute(user_id=user.id, poll_id=poll.id)
 
     def get_user_votes(self, poll: Poll, user: User) -> Iterable[OptionPollVoteData]:
         votes = self.statement(GET_USER_VOTES)\
