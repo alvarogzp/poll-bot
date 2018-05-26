@@ -43,7 +43,7 @@ class VotePollPresenter:
         self.view.update_poll(action.publication, full_poll_view_model)
 
         # then update all other publications in reverse order of creation (ie. most recent first)
-        for poll_publication in reversed(full_poll.publications):
+        for poll_publication in reversed(full_poll.publications.publications):
             # skip the publication in which the user voted, as it has been already updated
             if poll_publication != publication:
                 poll_publication = self.mapper_poll_publication.map_publication(poll_publication)
