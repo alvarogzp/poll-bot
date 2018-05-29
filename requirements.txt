@@ -1,4 +1,4 @@
 -e .
 
-telegram-bot-framework==v03.11.00
+telegram-bot-framework==v03.12.00
 sqlite-framework==v01.02.00
