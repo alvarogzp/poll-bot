@@ -24,6 +24,7 @@ setup(
 
     install_requires=[
         'telegram-bot-framework',
+        'sqlite-framework'
     ],
 
     python_requires='>=3',
