@@ -26,5 +26,6 @@ class PollInlineResultFormatter:
                 "disable_web_page_preview": True
             },
             "reply_markup": inline_keyboard,
-            "description": description
+            "description": description,
+            "thumb_url": "http://chittagongit.com/images/polling-icon/polling-icon-15.jpg"
         }
