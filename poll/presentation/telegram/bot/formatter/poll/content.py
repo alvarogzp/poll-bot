@@ -15,7 +15,7 @@ class OptionPollFormatter:
             .join(self._option(option) for option in poll.options)
 
         return FormattedText().normal(
-            "{title}\n"
+            "📊 {title}\n"
             "\n"
             "{options}\n"
             "\n"
