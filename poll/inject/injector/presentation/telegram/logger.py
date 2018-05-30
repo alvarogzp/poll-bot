@@ -4,7 +4,7 @@ from poll.domain.logger import PollLogger
 from poll.inject.injector.base import BaseInjector
 from poll.inject.injector.cache import InjectorCache
 from poll.inject.injector.presentation.telegram.formatter import FormatterInjector
-from poll.presentation.telegram.bot.view.logger import TelegramPollLogger
+from poll.presentation.telegram.bot.logger import TelegramPollLogger
 
 
 class LoggerInjector(BaseInjector):

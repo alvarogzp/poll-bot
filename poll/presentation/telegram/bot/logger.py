@@ -15,10 +15,6 @@ class TelegramPollLogger(PollLogger):
 
     def repository_component_migration(self, component: str, migration_type: str, old_version: int, new_version: int,
                                        about_to_migrate_to_version: int):
-        self.logger.log(LOG_TAG_MIGRATION, self.log_formatter.message(
-            self.log_formatter.about_to_migrate_to_version(about_to_migrate_to_version),
-            self.log_formatter.component(component),
-            self.log_formatter.migration_type(migration_type),
-            self.log_formatter.migration_old_version(old_version),
-            self.log_formatter.migration_new_version(new_version)
+        self.logger.log(LOG_TAG_MIGRATION, self.log_formatter.repository_component_migration(
+            component, migration_type, old_version, new_version, about_to_migrate_to_version
         ))

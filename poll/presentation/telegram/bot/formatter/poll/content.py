@@ -19,7 +19,7 @@ class OptionPollFormatter:
             "\n"
             "{options}\n"
             "\n"
-            "Total votes: {vote_count}"
+            "👥 {vote_count} votes"
         ).start_format().bold(
             title=title,
             vote_count=vote_count
@@ -32,7 +32,7 @@ class OptionPollFormatter:
         vote_count = option.vote_count
 
         text = FormattedText().normal(
-            "{name} [{vote_count}]"
+            "▪️ {name} [{vote_count}]"
         ).start_format().bold(
             name=name
         ).normal(
@@ -53,7 +53,7 @@ class OptionPollFormatter:
         user = vote.user.name
 
         return FormattedText().normal(
-            " - {user}"
+            "   ▫️ {user}"
         ).start_format().normal(
             user=user
         ).end_format()
