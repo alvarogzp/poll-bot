@@ -18,4 +18,4 @@ class PublishPoll(BaseView, PublishPollView):
         ).bold(
             publication=publication.id
         ).end_format()
-        self._send_to_user(text.build_message(), user)
+        #self._send_to_user(text.build_message(), user)
