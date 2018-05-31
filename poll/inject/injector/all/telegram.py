@@ -7,15 +7,18 @@ from poll.inject.injector.presentation.mapper import MapperInjector
 from poll.inject.injector.presentation.presenter import PresenterInjector
 from poll.inject.injector.presentation.telegram.action import TelegramActionInjector
 from poll.inject.injector.presentation.telegram.formatter.poll import PollFormatterInjector
+from poll.inject.injector.presentation.telegram.logger import LoggerInjector
 from poll.inject.injector.presentation.telegram.mapper import TelegramMapperInjector
 from poll.inject.injector.presentation.telegram.view import ViewInjector
 
 
 class TelegramInjector(BaseInjector):
-    def __init__(self, cache: InjectorCache, domain: DomainInjector, telegram_mapper: TelegramMapperInjector, api: Api):
+    def __init__(self, cache: InjectorCache, domain: DomainInjector, telegram_mapper: TelegramMapperInjector,
+                 logger: LoggerInjector, api: Api):
         super().__init__(cache)
         self.domain = domain
         self.telegram_mapper = telegram_mapper
+        self.logger = logger
         self.api = api
 
     def action(self) -> TelegramActionInjector:
@@ -38,6 +41,7 @@ class TelegramInjector(BaseInjector):
         return self._cache(ViewInjector, lambda: ViewInjector(
             self.cache,
             self._poll_formatter(),
+            self.logger,
             self.api
         ))
 
