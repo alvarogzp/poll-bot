@@ -26,6 +26,7 @@ class Injector(BaseInjector):
             self.cache,
             self.domain(),
             self._telegram_mapper(),
+            self._logger(),
             self.api
         ))
 
