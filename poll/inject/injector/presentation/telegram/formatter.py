@@ -47,4 +47,6 @@ class FormatterInjector(BaseInjector):
         return self._cache(OptionPollDescriptionFormatter, lambda: OptionPollDescriptionFormatter())
 
     def log(self) -> LogFormatter:
-        return self._cache(LogFormatter, lambda: LogFormatter())
+        return self._cache(LogFormatter, lambda: LogFormatter(
+            self.telegram_mapper.user()
+        ))
