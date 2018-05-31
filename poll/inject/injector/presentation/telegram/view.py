@@ -1,8 +1,9 @@
 from bot.api.api import Api
 
-from poll.inject.injector.cache import InjectorCache
 from poll.inject.injector.base import BaseInjector
+from poll.inject.injector.cache import InjectorCache
 from poll.inject.injector.presentation.telegram.formatter.poll import PollFormatterInjector
+from poll.inject.injector.presentation.telegram.logger import LoggerInjector
 from poll.presentation.telegram.bot.view.manage import ManagePoll
 from poll.presentation.telegram.bot.view.publish import PublishPoll
 from poll.presentation.telegram.bot.view.search import SearchPoll
@@ -14,9 +15,10 @@ from poll.presentation.view.vote import VotePollView
 
 
 class ViewInjector(BaseInjector):
-    def __init__(self, cache: InjectorCache, poll_formatter: PollFormatterInjector, api: Api):
+    def __init__(self, cache: InjectorCache, poll_formatter: PollFormatterInjector, logger: LoggerInjector, api: Api):
         super().__init__(cache)
         self.poll_formatter = poll_formatter
+        self.logger = logger
         self.api = api
 
     def manage(self) -> ManagePollView:
@@ -34,7 +36,8 @@ class ViewInjector(BaseInjector):
 
     def publish(self) -> PublishPollView:
         return self._cache(PublishPollView, lambda: PublishPoll(
-            self.api
+            self.api,
+            self.logger.telegram()
         ))
 
     def vote(self) -> VotePollView:
