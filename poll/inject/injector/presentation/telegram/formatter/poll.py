@@ -1,7 +1,6 @@
-from poll.inject.injector.cache import InjectorCache
 from poll.inject.injector.base import BaseInjector
+from poll.inject.injector.cache import InjectorCache
 from poll.inject.injector.presentation.telegram.mapper import TelegramMapperInjector
-from poll.presentation.telegram.bot.formatter.log import LogFormatter
 from poll.presentation.telegram.bot.formatter.poll.content import PollFormatter, OptionPollFormatter
 from poll.presentation.telegram.bot.formatter.poll.description import PollDescriptionFormatter, \
     OptionPollDescriptionFormatter
@@ -10,7 +9,7 @@ from poll.presentation.telegram.bot.formatter.poll.inline.result import PollInli
 from poll.presentation.telegram.bot.formatter.poll.vote_result import VoteResultFormatter
 
 
-class FormatterInjector(BaseInjector):
+class PollFormatterInjector(BaseInjector):
     def __init__(self, cache: InjectorCache, telegram_mapper: TelegramMapperInjector):
         super().__init__(cache)
         self.telegram_mapper = telegram_mapper
@@ -45,8 +44,3 @@ class FormatterInjector(BaseInjector):
 
     def _option_poll_description(self) -> OptionPollDescriptionFormatter:
         return self._cache(OptionPollDescriptionFormatter, lambda: OptionPollDescriptionFormatter())
-
-    def log(self) -> LogFormatter:
-        return self._cache(LogFormatter, lambda: LogFormatter(
-            self.telegram_mapper.user()
-        ))
