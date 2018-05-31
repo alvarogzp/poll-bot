@@ -1,7 +1,9 @@
 from bot.action.util.textformat import FormattedText
 
+from poll.presentation.telegram.bot.formatter.log.base import BaseLogFormatter
 
-class LogFormatter:
+
+class RepositoryLogFormatter(BaseLogFormatter):
     def repository_component_migration(self, component: str, migration_type: str, old_version: int, new_version: int,
                                        about_to_migrate_to_version: int):
         return self._message(
@@ -36,7 +38,3 @@ class LogFormatter:
     def _migration_new_version(new_version: int):
         return FormattedText().normal("To version: {version}").start_format()\
             .bold(version=new_version).end_format()
-
-    @staticmethod
-    def _message(*message_parts: FormattedText):
-        return FormattedText().newline().join(message_parts)
