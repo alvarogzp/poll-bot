@@ -14,7 +14,10 @@ class LoggerInjector(BaseInjector):
         self.logger = logger
 
     def poll(self) -> PollLogger:
-        return self._cache(PollLogger, lambda: TelegramPollLogger(
+        return self.telegram()
+
+    def telegram(self) -> TelegramPollLogger:
+        return self._cache(TelegramPollLogger, lambda: TelegramPollLogger(
             self.logger,
             self.log_formatter.repository()
         ))
