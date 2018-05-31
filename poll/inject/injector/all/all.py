@@ -2,12 +2,12 @@ from bot.api.api import Api
 from bot.logger.logger import Logger
 from bot.multithreading.worker import Worker
 
-from poll.inject.injector.cache import InjectorCache
 from poll.inject.injector.all.domain import DomainInjector
 from poll.inject.injector.all.telegram import TelegramInjector
 from poll.inject.injector.base import BaseInjector
+from poll.inject.injector.cache import InjectorCache
 from poll.inject.injector.data.repository.logger import SqliteLoggerInjector
-from poll.inject.injector.presentation.telegram.formatter import FormatterInjector
+from poll.inject.injector.presentation.telegram.formatter.log import LogFormatterInjector
 from poll.inject.injector.presentation.telegram.logger import LoggerInjector
 from poll.inject.injector.presentation.telegram.mapper import TelegramMapperInjector
 
@@ -47,12 +47,12 @@ class Injector(BaseInjector):
     def _logger(self) -> LoggerInjector:
         return self._cache(LoggerInjector, lambda: LoggerInjector(
             self.cache,
-            self._formatter(),
+            self._log_formatter(),
             self.logger
         ))
 
-    def _formatter(self) -> FormatterInjector:
-        return self._cache(FormatterInjector, lambda: FormatterInjector(
+    def _log_formatter(self) -> LogFormatterInjector:
+        return self._cache(LogFormatterInjector, lambda: LogFormatterInjector(
             self.cache,
             self._telegram_mapper()
         ))
