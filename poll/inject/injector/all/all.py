@@ -25,7 +25,6 @@ class Injector(BaseInjector):
         return self._cache(TelegramInjector, lambda: TelegramInjector(
             self.cache,
             self.domain(),
-            self._formatter(),
             self._telegram_mapper(),
             self.api
         ))
