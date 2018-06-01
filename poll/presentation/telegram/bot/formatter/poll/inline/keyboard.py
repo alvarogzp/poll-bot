@@ -13,7 +13,7 @@ class PollInlineKeyboardFormatter:
         self.mapper_option = mapper_option
 
     @staticmethod
-    def poll_creation_inline_keyboard(poll_id: PollIdViewModel):
+    def poll_created_inline_keyboard(poll_id: PollIdViewModel):
         return InlineKeyboardMarkup\
             .with_fixed_columns(1)\
             .add(InlineKeyboardButton.switch_inline_query(

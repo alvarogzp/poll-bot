@@ -71,7 +71,7 @@ class ManagePoll(BaseView, ManagePollView):
             ).concat(
                 poll=self.poll_formatter.format_poll(full_poll)
         ).end_format()
-        inline_keyboard = self.inline_keyboard_formatter.poll_creation_inline_keyboard(poll_id)
+        inline_keyboard = self.inline_keyboard_formatter.poll_created_inline_keyboard(poll_id)
         api_message = text.build_message().with_reply_markup(inline_keyboard)
         self._send_message(api_message, message)
 
