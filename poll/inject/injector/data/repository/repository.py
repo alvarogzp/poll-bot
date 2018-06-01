@@ -5,7 +5,7 @@ from poll.domain.repository.poll.get import GetPollRepository
 from poll.domain.repository.poll.manage import ManagePollRepository
 from poll.domain.repository.poll.publish import PublishPollRepository
 from poll.domain.repository.poll.vote import VotePollRepository
-from poll.domain.repository.state import UserStateRepository
+from poll.domain.repository.user.state import UserStateRepository
 from poll.inject.injector.cache import InjectorCache
 from poll.inject.injector.base import BaseInjector
 from poll.inject.injector.data.repository.data_source import DataSourceInjector

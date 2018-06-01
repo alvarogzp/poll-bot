@@ -1,6 +1,6 @@
 from poll.domain.model.user.state import State
 from poll.domain.model.user.user import User
-from poll.domain.repository.state import UserStateRepository
+from poll.domain.repository.user.state import UserStateRepository
 
 
 class UserStateInteractor:

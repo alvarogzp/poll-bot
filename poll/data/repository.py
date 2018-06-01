@@ -17,7 +17,7 @@ from poll.domain.repository.poll.get import GetPollRepository
 from poll.domain.repository.poll.manage import ManagePollRepository
 from poll.domain.repository.poll.publish import PublishPollRepository
 from poll.domain.repository.poll.vote import VotePollRepository
-from poll.domain.repository.state import UserStateRepository
+from poll.domain.repository.user.state import UserStateRepository
 
 
 class PollDataRepository(StorageApi, GetPollRepository, ManagePollRepository, PublishPollRepository,
