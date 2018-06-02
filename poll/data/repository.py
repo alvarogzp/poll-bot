@@ -10,18 +10,22 @@ from poll.domain.model.poll.info import PollInfo
 from poll.domain.model.poll.option import PollOptionInfo, PollOptionNumber
 from poll.domain.model.poll.poll import PollNumber, Poll
 from poll.domain.model.poll.publication import PollPublication
+from poll.domain.model.poll.settings.anonymity import PollAnonymity
+from poll.domain.model.poll.settings.type import PollType
 from poll.domain.model.poll.vote import OptionPollVote
+from poll.domain.model.user.settings import UserSettings
 from poll.domain.model.user.state import State
 from poll.domain.model.user.user import User
 from poll.domain.repository.poll.get import GetPollRepository
 from poll.domain.repository.poll.manage import ManagePollRepository
 from poll.domain.repository.poll.publish import PublishPollRepository
 from poll.domain.repository.poll.vote import VotePollRepository
+from poll.domain.repository.user.settings import UserSettingsRepository
 from poll.domain.repository.user.state import UserStateRepository
 
 
 class PollDataRepository(StorageApi, GetPollRepository, ManagePollRepository, PublishPollRepository,
-                         VotePollRepository, UserStateRepository):
+                         VotePollRepository, UserStateRepository, UserSettingsRepository):
     def __init__(self, data_source: PollDataSource, scheduler: StorageScheduler):
         super().__init__(data_source, scheduler)
         self.data_source = data_source  # fix type hinting
@@ -126,6 +130,24 @@ class PollDataRepository(StorageApi, GetPollRepository, ManagePollRepository, Pu
         return self._with_result(
             lambda: self.data_source.get_state(user),
             "get_state"
+        )
+
+    def set_user_poll_type(self, user: User, poll_type: PollType):
+        self._with_result(
+            lambda: self.data_source.set_user_poll_type(user, poll_type),
+            "set_user_poll_type"
+        )
+
+    def set_user_poll_anonymity(self, user: User, anonymity: PollAnonymity):
+        self._with_result(
+            lambda: self.data_source.set_user_poll_anonymity(user, anonymity),
+            "set_user_poll_anonymity"
+        )
+
+    def get_user_settings(self, user: User) -> UserSettings:
+        return self._with_result(
+            lambda: self.data_source.get_user_settings(user),
+            "get_user_settings"
         )
 
 
