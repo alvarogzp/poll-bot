@@ -6,7 +6,10 @@ from poll.domain.model.poll.info import PollInfo
 from poll.domain.model.poll.option import PollOptionInfo, PollOptionNumber
 from poll.domain.model.poll.poll import Poll, PollNumber
 from poll.domain.model.poll.publication import PollPublication
+from poll.domain.model.poll.settings.anonymity import PollAnonymity
+from poll.domain.model.poll.settings.type import PollType
 from poll.domain.model.poll.vote import OptionPollVote
+from poll.domain.model.user.settings import UserSettings
 from poll.domain.model.user.state import State
 from poll.domain.model.user.user import User
 
@@ -67,4 +70,13 @@ class PollDataSource(StorageDataSource):
         raise NotImplementedError()
 
     def get_state(self, user: User) -> State:
+        raise NotImplementedError()
+
+    def set_user_poll_type(self, user: User, poll_type: PollType):
+        raise NotImplementedError()
+
+    def set_user_poll_anonymity(self, user: User, anonymity: PollAnonymity):
+        raise NotImplementedError()
+
+    def get_user_settings(self, user: User) -> UserSettings:
         raise NotImplementedError()
