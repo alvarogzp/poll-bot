@@ -8,6 +8,7 @@ from poll.data.data_source.sqlite.component.poll.option import PollOptionSqliteC
 from poll.data.data_source.sqlite.component.poll.poll import PollSqliteComponent
 from poll.data.data_source.sqlite.component.poll.publication import PollPublicationSqliteComponent
 from poll.data.data_source.sqlite.component.poll.vote.option import PollVoteOptionSqliteComponent
+from poll.data.data_source.sqlite.component.user.settings import UserSettingsSqliteComponent
 from poll.data.data_source.sqlite.component.user.state import UserStateSqliteComponent
 from poll.data.data_source.sqlite.component.user.user import UserSqliteComponent
 from poll.data.data_source.sqlite.model.mapper.all import SqliteModelMappers
@@ -17,7 +18,10 @@ from poll.domain.model.poll.info import PollInfo
 from poll.domain.model.poll.option import PollOptionInfo, PollOptionNumber
 from poll.domain.model.poll.poll import Poll, PollNumber
 from poll.domain.model.poll.publication import PollPublication
+from poll.domain.model.poll.settings.anonymity import PollAnonymity
+from poll.domain.model.poll.settings.type import PollType
 from poll.domain.model.poll.vote import OptionPollVote
+from poll.domain.model.user.settings import UserSettings
 from poll.domain.model.user.state import State
 from poll.domain.model.user.user import User
 
@@ -30,6 +34,7 @@ class SqlitePollDataSource(SqliteStorageDataSource, PollDataSource):
         super().__init__(session, logger)
         self.user = None  # type: UserSqliteComponent
         self.user_state = None  # type: UserStateSqliteComponent
+        self.user_settings = None  # type: UserSettingsSqliteComponent
         self.poll = None  # type: PollSqliteComponent
         self.poll_option = None  # type: PollOptionSqliteComponent
         self.poll_publication = None  # type: PollPublicationSqliteComponent
@@ -44,6 +49,7 @@ class SqlitePollDataSource(SqliteStorageDataSource, PollDataSource):
         factory = SqlitePollComponentFactory(self.session, self.logger)
         self.user = factory.user()
         self.user_state = factory.user_state()
+        self.user_settings = factory.user_settings()
         self.poll = factory.poll()
         self.poll_option = factory.poll_option()
         self.poll_publication = factory.poll_publication()
@@ -117,3 +123,12 @@ class SqlitePollDataSource(SqliteStorageDataSource, PollDataSource):
 
     def get_state(self, user: User) -> State:
         return self.user_state.get(user)
+
+    def set_user_poll_type(self, user: User, poll_type: PollType):
+        self.user_settings.set_poll_type(user, poll_type)
+
+    def set_user_poll_anonymity(self, user: User, anonymity: PollAnonymity):
+        self.user_settings.set_poll_anonymity(user, anonymity)
+
+    def get_user_settings(self, user: User) -> UserSettings:
+        return self.user_settings.get(user)
