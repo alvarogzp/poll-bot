@@ -4,6 +4,7 @@ from poll.data.data_source.sqlite.component.poll.option import PollOptionSqliteC
 from poll.data.data_source.sqlite.component.poll.poll import PollSqliteComponent
 from poll.data.data_source.sqlite.component.poll.publication import PollPublicationSqliteComponent
 from poll.data.data_source.sqlite.component.poll.vote.option import PollVoteOptionSqliteComponent
+from poll.data.data_source.sqlite.component.user.settings import UserSettingsSqliteComponent
 from poll.data.data_source.sqlite.component.user.state import UserStateSqliteComponent
 from poll.data.data_source.sqlite.component.user.user import UserSqliteComponent
 
@@ -14,6 +15,9 @@ class SqlitePollComponentFactory(SqliteStorageComponentFactory):
 
     def user_state(self):
         return self._initialized(UserStateSqliteComponent())
+
+    def user_settings(self):
+        return self._initialized(UserSettingsSqliteComponent())
 
     def poll(self):
         return self._initialized(PollSqliteComponent())
