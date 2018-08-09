@@ -10,7 +10,7 @@ from poll.domain.model.poll.info import PollInfo
 from poll.domain.model.poll.option import PollOptionInfo, PollOptionNumber
 from poll.domain.model.poll.poll import PollNumber, Poll
 from poll.domain.model.poll.publication import PollPublication
-from poll.domain.model.poll.vote import OptionPollVote
+from poll.domain.model.poll.vote import PollVote, OptionPollVote, OpenPollVote
 from poll.domain.model.user.state import State
 from poll.domain.model.user.user import User
 from poll.domain.repository.poll.get import GetPollRepository
@@ -104,10 +104,22 @@ class PollDataRepository(StorageApi, GetPollRepository, ManagePollRepository, Pu
             "vote_option"
         )
 
+    def vote_open(self, vote: OpenPollVote):
+        self._with_result(
+            lambda: self.data_source.vote_open(vote),
+            "vote_open"
+        )
+
     def unvote_option(self, vote: OptionPollVote):
         self._with_result(
             lambda: self.data_source.unvote_option(vote),
             "unvote_option"
+        )
+
+    def unvote_poll(self, vote: PollVote):
+        self._with_result(
+            lambda: self.data_source.unvote_poll(vote),
+            "unvote_poll"
         )
 
     def get_votes(self, poll: Poll, user: User) -> PollVotes:

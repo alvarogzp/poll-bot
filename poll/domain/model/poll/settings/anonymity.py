@@ -8,3 +8,5 @@ class PollAnonymity(Comparable):
 
 
 PERSONAL = PollAnonymity(0)
+ANONYMOUS = PollAnonymity(1)
+ANONYMOUS_AND_ONLY_TO_CREATOR = PollAnonymity(2)

@@ -6,7 +6,7 @@ from poll.domain.model.poll.info import PollInfo
 from poll.domain.model.poll.option import PollOptionInfo, PollOptionNumber
 from poll.domain.model.poll.poll import Poll, PollNumber
 from poll.domain.model.poll.publication import PollPublication
-from poll.domain.model.poll.vote import OptionPollVote
+from poll.domain.model.poll.vote import PollVote, OptionPollVote, OpenPollVote
 from poll.domain.model.user.state import State
 from poll.domain.model.user.user import User
 
@@ -57,7 +57,13 @@ class PollDataSource(StorageDataSource):
     def vote_option(self, vote: OptionPollVote):
         raise NotImplementedError()
 
+    def vote_open(self, vote: OpenPollVote):
+        raise NotImplementedError()
+
     def unvote_option(self, vote: OptionPollVote):
+        raise NotImplementedError()
+
+    def unvote_poll(self, vote: PollVote):
         raise NotImplementedError()
 
     def get_votes(self, poll: Poll, user: User) -> PollVotes:

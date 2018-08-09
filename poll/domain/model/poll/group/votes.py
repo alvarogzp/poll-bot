@@ -1,6 +1,6 @@
 from typing import Sequence
 
-from poll.domain.model.poll.vote import PollVote, OptionPollVote
+from poll.domain.model.poll.vote import PollVote, OptionPollVote, OpenPollVote
 
 
 class PollVotes:
@@ -25,5 +25,11 @@ class PollVotes:
 
 class OptionPollVotes(PollVotes):
     def __init__(self, votes: Sequence[OptionPollVote]):
+        super().__init__(votes)
+        self.votes = votes  # fix type hinting
+
+
+class OpenPollVotes(PollVotes):
+    def __init__(self, votes: Sequence[OpenPollVote]):
         super().__init__(votes)
         self.votes = votes  # fix type hinting

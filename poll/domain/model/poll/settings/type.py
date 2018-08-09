@@ -8,3 +8,7 @@ class PollType(Comparable):
 
 
 SINGLE_VOTE = PollType(0)
+MULTI_VOTE = PollType(1)
+MULTI_VOTE_LIMITED = PollType(2)
+OPEN = PollType(3)
+RANGE = PollType(4)

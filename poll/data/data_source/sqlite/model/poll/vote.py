@@ -13,3 +13,9 @@ class OptionPollVoteData(PollVoteData):
     def __init__(self, user: PollUserData, publication: PollPublicationData, option: PollOption):
         super().__init__(user, publication)
         self.option = option
+
+
+class OpenPollVoteData(PollVoteData):
+    def __init__(self, user: PollUserData, publication: PollPublicationData, text: str):
+        super().__init__(user, publication)
+        self.text = text
